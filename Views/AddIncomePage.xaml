@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:allyza.Views.Controls"
+             xmlns:models="clr-namespace:allyza.Models"
+             x:Class="allyza.Views.AddIncomePage"
+             Title="Income"
+             BackgroundColor="#A8D4F0"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="22,20,22,16" Spacing="0">
+
+                <!-- HEADER -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="Income" FontSize="26" FontAttributes="Bold"
+                               TextColor="#0A0A0A" FontFamily="Georgia"/>
+                        <Label Text="Record your earnings" FontSize="15" TextColor="#2E6A90"/>
+                    </VerticalStackLayout>
+
+                </Grid>
+
+                <!-- ADD INCOME CARD -->
+                <Border BackgroundColor="#D6EEFA" Stroke="#7BBDE0" StrokeThickness="1.5"
+                        StrokeShape="RoundRectangle 20" Padding="20" Margin="0,0,0,20">
+                    <VerticalStackLayout Spacing="18">
+
+                        <Label Text="NEW INCOME ENTRY" TextColor="#1A4F72"
+                               FontSize="15" CharacterSpacing="2" FontAttributes="Bold"/>
+
+                        <!-- Amount -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Amount" TextColor="#0A0A0A" FontSize="20" FontAttributes="Bold"/>
+                            <Border Stroke="#7BBDE0" StrokeThickness="1.5"
+                                    StrokeShape="RoundRectangle 14" BackgroundColor="#B8DEFA" Padding="0">
+                                <Grid ColumnDefinitions="44,*">
+                                    <Label Grid.Column="0" Text="₱" FontSize="20" FontAttributes="Bold"
+                                           TextColor="#1A4F72" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Entry Grid.Column="1" Text="{Binding AmountText}"
+                                           Placeholder="0.00" PlaceholderColor="#6A9FBF"
+                                           TextColor="#0A0A0A" FontSize="22" FontAttributes="Bold"
+                                           Keyboard="Numeric" BackgroundColor="Transparent"
+                                           Margin="0,10,14,10"/>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Source -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Income Source" TextColor="#0A0A0A" FontSize="20" FontAttributes="Bold"/>
+                            <Border Stroke="#7BBDE0" StrokeThickness="1.5"
+                                    StrokeShape="RoundRectangle 14" BackgroundColor="#B8DEFA" Padding="14,10">
+                                <Entry Text="{Binding Source}"
+                                       Placeholder="e.g. Salary, Freelance, Business…"
+                                       PlaceholderColor="#6A9FBF" TextColor="#0A0A0A"
+                                       FontSize="20" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Frequency chips -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Frequency" TextColor="#0A0A0A" FontSize="20" FontAttributes="Bold"/>
+                            <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start">
+
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 20" Padding="14,7" StrokeThickness="1.5">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsMonthly}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#1A7BB9"/>
+                                            <Setter Property="Stroke" Value="#1A7BB9"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsMonthly}" Value="False">
+                                            <Setter Property="BackgroundColor" Value="#B8DEFA"/>
+                                            <Setter Property="Stroke" Value="#7BBDE0"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetFrequencyCommand}" CommandParameter="Monthly"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="Monthly" FontSize="20" FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                </Border>
+
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 20" Padding="14,7" StrokeThickness="1.5">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsWeekly}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#1A7BB9"/>
+                                            <Setter Property="Stroke" Value="#1A7BB9"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsWeekly}" Value="False">
+                                            <Setter Property="BackgroundColor" Value="#B8DEFA"/>
+                                            <Setter Property="Stroke" Value="#7BBDE0"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetFrequencyCommand}" CommandParameter="Weekly"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="Weekly" FontSize="20" FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                </Border>
+
+
+
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 20" Padding="14,7" StrokeThickness="1.5">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsAnnual}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#1A7BB9"/>
+                                            <Setter Property="Stroke" Value="#1A7BB9"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsAnnual}" Value="False">
+                                            <Setter Property="BackgroundColor" Value="#B8DEFA"/>
+                                            <Setter Property="Stroke" Value="#7BBDE0"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetFrequencyCommand}" CommandParameter="Annual"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="Annual" FontSize="20" FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                </Border>
+
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 20" Padding="14,7" StrokeThickness="1.5">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsOneTime}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#1A7BB9"/>
+                                            <Setter Property="Stroke" Value="#1A7BB9"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsOneTime}" Value="False">
+                                            <Setter Property="BackgroundColor" Value="#B8DEFA"/>
+                                            <Setter Property="Stroke" Value="#7BBDE0"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetFrequencyCommand}" CommandParameter="One-time"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="One-time" FontSize="20" FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                </Border>
+
+                            </FlexLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Date -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Date" TextColor="#0A0A0A" FontSize="20" FontAttributes="Bold"/>
+                            <Border Stroke="#7BBDE0" StrokeThickness="1.5"
+                                    StrokeShape="RoundRectangle 20" BackgroundColor="#B8DEFA" Padding="14,4">
+                                <DatePicker Date="{Binding Date}" TextColor="#0A0A0A"
+                                            BackgroundColor="Transparent"
+                                            Format="MMMM d, yyyy" FontSize="20"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Notes -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Notes (optional)" TextColor="#0A0A0A" FontSize="20" FontAttributes="Bold"/>
+                            <Border Stroke="#7BBDE0" StrokeThickness="1.5"
+                                    StrokeShape="RoundRectangle 14" BackgroundColor="#B8DEFA" Padding="14,8">
+                                <Editor Text="{Binding Notes}"
+                                        Placeholder="Any additional details…"
+                                        PlaceholderColor="#6A9FBF" TextColor="#0A0A0A"
+                                        FontSize="20" BackgroundColor="Transparent"
+                                        AutoSize="TextChanges" MinimumHeightRequest="60"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Error / Success -->
+                        <Label Text="{Binding ErrorMessage}" TextColor="#C0392B"
+                               FontSize="15" IsVisible="{Binding HasError}"/>
+                        <Label Text="{Binding SuccessMessage}" TextColor="#1A4F72"
+                               FontSize="15" IsVisible="{Binding HasSuccess}"
+                               HorizontalOptions="Center" FontAttributes="Bold"/>
+
+                        <!-- Buttons -->
+                        <Grid ColumnDefinitions="*,20,*" Margin="0,4,0,0">
+                            <Button Grid.Column="0" Text="CLEAR" Command="{Binding ClearCommand}"
+                                    BackgroundColor="#B8DEFA" TextColor="#1A4F72" FontSize="17"
+                                    BorderColor="#7BBDE0" BorderWidth="1.5"
+                                    CornerRadius="14" HeightRequest="50" FontAttributes="Bold"/>
+                            <Button Grid.Column="2" Text="SAVE INCOME" Command="{Binding SaveCommand}"
+                                    IsEnabled="{Binding IsNotBusy}"
+                                    BackgroundColor="#1A7BB9" TextColor="White"
+                                    FontAttributes="Bold" FontSize="17"
+                                    CornerRadius="14" HeightRequest="50"
+                                    Shadow="{Shadow Brush='#801A7BB9', Offset='0,4', Radius='10'}"/>
+                        </Grid>
+
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                                           Color="#1A7BB9" HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- SAVED INCOMES LIST -->
+                <Label Text="RECORDED INCOME" TextColor="#1A4F72"
+                       FontSize="20" CharacterSpacing="2" FontAttributes="Bold"
+                       Margin="0,0,0,12"/>
+
+                <!-- Empty state -->
+                <VerticalStackLayout IsVisible="{Binding HasNoIncomes}"
+                                     HorizontalOptions="Center" Spacing="8" Margin="0,20,0,20">
+                    <Label Text="📭" FontSize="40" HorizontalOptions="Center"/>
+                    <Label Text="No income recorded yet"
+                           TextColor="#2E6A90" FontSize="15" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- Income items -->
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Incomes}" Spacing="10">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:IncomeModel">
+                            <Border BackgroundColor="#D6EEFA" Stroke="#7BBDE0"
+                                    StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="16,14">
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+
+                                    <HorizontalStackLayout Grid.Column="0" Grid.Row="0" Spacing="8">
+                                        <Label Text="{Binding Source}" FontSize="20"
+                                               FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                        <Border BackgroundColor="#C8F0DC" Stroke="#4CAF82"
+                                                StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="7,3">
+                                            <Label Text="{Binding Frequency}" FontSize="15" TextColor="#1A6640"/>
+                                        </Border>
+                                    </HorizontalStackLayout>
+
+                                    <Label Grid.Column="1" Grid.Row="0"
+                                           Text="{Binding AmountDisplay}"
+                                           FontSize="20" FontAttributes="Bold"
+                                           TextColor="#1A4F72" VerticalOptions="Center"/>
+
+                                    <Label Grid.Column="0" Grid.Row="1"
+                                           Text="{Binding DateDisplay}"
+                                           FontSize="15" TextColor="#2E6A90" Margin="0,4,0,0"/>
+
+                                    <Label Grid.Column="1" Grid.Row="1"
+                                           Text="✕" FontSize="15" TextColor="#C0392B"
+                                           HorizontalOptions="End" Margin="0,4,0,0">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteIncomeCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <controls:BottomNavBar Grid.Row="1"/>
+    </Grid>
+
+</ContentPage>

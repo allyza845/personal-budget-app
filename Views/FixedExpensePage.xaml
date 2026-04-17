@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:allyza.Views.Controls"
+             xmlns:models="clr-namespace:allyza.Models"
+             x:Class="allyza.Views.FixedExpensePage"
+             Title="Fixed Expenses"
+             BackgroundColor="#A8D4F0"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="22,20,22,16" Spacing="0">
+
+                <!-- HEADER -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Fixed Expenses" FontSize="26" FontAttributes="Bold"
+                               TextColor="#0A0A0A" FontFamily="Georgia"/>
+                        <Label Text="Recurring bills &amp; subscriptions"
+                               FontSize="14" TextColor="#2E6A90"/>
+                    </VerticalStackLayout>
+                    <Border Grid.Column="1" BackgroundColor="#D6EEFA"  Stroke="#1A4F72"
+                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14"
+                            Padding="12,8" VerticalOptions="Center">
+                        <VerticalStackLayout Spacing="1">
+                            <Label Text="{Binding TotalMonthlyDisplay}"
+                                   FontSize="14" FontAttributes="Bold"
+                                   TextColor="#1A4F72" HorizontalOptions="Center"/>
+                            <Label Text="/ month" FontSize="11"
+                                   TextColor="#2E6A90" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- ADD CARD -->
+                <Border BackgroundColor="#D6EEFA" Stroke="#7BBDE0" StrokeThickness="1.5"
+                        StrokeShape="RoundRectangle 20" Padding="20" Margin="0,0,0,20">
+                    <VerticalStackLayout Spacing="16">
+
+                        <Label Text="NEW FIXED EXPENSE" TextColor="#1A4F72"
+                               FontSize="13" CharacterSpacing="2" FontAttributes="Bold"/>
+
+                        <!-- Amount -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Amount" TextColor="#1A4F72" FontSize="13" FontAttributes="Bold"/>
+                            <Border Stroke="#7BBDE0" StrokeThickness="1.5"
+                                    StrokeShape="RoundRectangle 14" BackgroundColor="#B8DEFA" Padding="0">
+                                <Grid ColumnDefinitions="44,*">
+                                    <Label Grid.Column="0" Text="₱" FontSize="18" FontAttributes="Bold"
+                                           TextColor="#1A4F72" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Entry Grid.Column="1" Text="{Binding AmountText}"
+                                           Placeholder="0.00" PlaceholderColor="#6A9FBF"
+                                           TextColor="#0A0A0A" FontSize="22" FontAttributes="Bold"
+                                           Keyboard="Numeric" BackgroundColor="Transparent"
+                                           Margin="0,10,14,10"/>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Name -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Bill / Subscription Name" TextColor="#1A4F72" FontSize="13" FontAttributes="Bold"/>
+                            <Border Stroke="#7BBDE0" StrokeThickness="1.5"
+                                    StrokeShape="RoundRectangle 14" BackgroundColor="#B8DEFA" Padding="14,10">
+                                <Entry Text="{Binding Name}"
+                                       Placeholder="e.g. Netflix, Rent, Electric Bill…"
+                                       PlaceholderColor="#6A9FBF" TextColor="#0A0A0A"
+                                       FontSize="15" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Due Day -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Due Day of Month" TextColor="#1A4F72" FontSize="13" FontAttributes="Bold"/>
+                            <HorizontalStackLayout Spacing="14" VerticalOptions="Center">
+                                <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                        StrokeThickness="1.5" StrokeShape="RoundRectangle 12"
+                                        Padding="14,10" WidthRequest="46">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding DecreaseDayCommand}"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="−" FontSize="18" TextColor="#0A0A0A" HorizontalOptions="Center"/>
+                                </Border>
+                                <Label Text="{Binding DueDay}" FontSize="24" FontAttributes="Bold"
+                                       TextColor="#0A0A0A" WidthRequest="36"
+                                       HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                                <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                        StrokeThickness="1.5" StrokeShape="RoundRectangle 12"
+                                        Padding="14,10" WidthRequest="46">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding IncreaseDayCommand}"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="+" FontSize="18" TextColor="#0A0A0A" HorizontalOptions="Center"/>
+                                </Border>
+                                <Label Text="{Binding DueDay, StringFormat='Day {0}'}"
+                                       FontSize="13" TextColor="#2E6A90" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Category chips -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Category" TextColor="#1A4F72" FontSize="13" FontAttributes="Bold"/>
+                            <FlexLayout BindableLayout.ItemsSource="{Binding Categories}"
+                                        Wrap="Wrap" Direction="Row" JustifyContent="Start">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="models:CategoryModel">
+                                        <Border StrokeShape="RoundRectangle 20" Padding="12,6"
+                                                StrokeThickness="1.5" Margin="0,0,8,8">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="False">
+                                                    <Setter Property="BackgroundColor" Value="{Binding Color}"/>
+                                                    <Setter Property="Stroke" Value="{Binding Color}"/>
+                                                    <Setter Property="Opacity" Value="0.75"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="{Binding Color}"/>
+                                                    <Setter Property="Stroke" Value="#1A4F72"/>
+                                                    <Setter Property="Opacity" Value="1"/>
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectCategoryCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>
+                                            <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                                                <Label Text="{Binding Icon}" FontSize="14" VerticalOptions="Center"/>
+                                                <Label Text="{Binding Name}" FontSize="13"
+                                                       FontAttributes="Bold" TextColor="#0A0A0A"
+                                                       VerticalOptions="Center"/>
+                                                <Label Text="✓" FontSize="13" TextColor="#1A4F72"
+                                                       VerticalOptions="Center"
+                                                       IsVisible="{Binding IsSelected}"/>
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Notes -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Notes (optional)" TextColor="#1A4F72" FontSize="13" FontAttributes="Bold"/>
+                            <Border Stroke="#7BBDE0" StrokeThickness="1.5"
+                                    StrokeShape="RoundRectangle 14" BackgroundColor="#B8DEFA" Padding="14,8">
+                                <Editor Text="{Binding Notes}"
+                                        Placeholder="e.g. Account number, provider…"
+                                        PlaceholderColor="#6A9FBF" TextColor="#0A0A0A"
+                                        FontSize="15" BackgroundColor="Transparent"
+                                        AutoSize="TextChanges" MinimumHeightRequest="60"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Label Text="{Binding ErrorMessage}" TextColor="#C0392B"
+                               FontSize="13" IsVisible="{Binding HasError}"/>
+                        <Label Text="{Binding SuccessMessage}" TextColor="#1A6640"
+                               FontSize="13" IsVisible="{Binding HasSuccess}"
+                               HorizontalOptions="Center" FontAttributes="Bold"/>
+
+                        <Grid ColumnDefinitions="*,16,*" Margin="0,4,0,0">
+                            <Button Grid.Column="0" Text="CLEAR" Command="{Binding ClearCommand}"
+                                    BackgroundColor="#B8DEFA" TextColor="#1A4F72"
+                                    BorderColor="#7BBDE0" BorderWidth="1.5"
+                                    CornerRadius="14" HeightRequest="50"
+                                    FontAttributes="Bold" FontSize="17"/>
+                            <Button Grid.Column="2" Text="SAVE" Command="{Binding SaveCommand}"
+                                    IsEnabled="{Binding IsNotBusy}"
+                                    BackgroundColor="#1A7BB9" TextColor="White"
+                                    FontAttributes="Bold" FontSize="17"
+                                    CornerRadius="14" HeightRequest="50"
+                                    Shadow="{Shadow Brush='#801A7BB9', Offset='0,4', Radius='10'}"/>
+                        </Grid>
+
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                                           Color="#1A7BB9" HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- BILLS LIST -->
+                <Label Text="ALL BILLS" TextColor="#1A4F72"
+                       FontSize="13" CharacterSpacing="2" FontAttributes="Bold" Margin="0,0,0,12"/>
+
+                <VerticalStackLayout IsVisible="{Binding HasNoFixedExpenses}"
+                                     HorizontalOptions="Center" Spacing="8" Margin="0,20,0,20">
+                    <Label Text="📋" FontSize="40" HorizontalOptions="Center"/>
+                    <Label Text="No fixed expenses yet"
+                           TextColor="#2E6A90" FontSize="14" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <CollectionView ItemsSource="{Binding FixedExpenses}" SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:FixedExpenseModel">
+                            <Border StrokeShape="RoundRectangle 16" Padding="16,14"
+                                    StrokeThickness="1.5" BackgroundColor="#D6EEFA" Stroke="#7BBDE0">
+                                <Border.Triggers>
+                                    <!-- Inactive → deep blue-grey, always first so active states override -->
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="False">
+                                        <Setter Property="BackgroundColor" Value="#C8DCEA"/>
+                                        <Setter Property="Stroke" Value="#90B8D0"/>
+                                    </DataTrigger>
+                                    <!-- Paid → lighter blue -->
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsPaidThisMonth}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="#B8DEFA"/>
+                                        <Setter Property="Stroke" Value="#7BBDE0"/>
+                                    </DataTrigger>
+                                    <!-- Overdue → pastel pink -->
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsOverdue}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="#FAD4D4"/>
+                                        <Setter Property="Stroke" Value="#F0A8A8"/>
+                                    </DataTrigger>
+                                    <!-- Due today → pastel gold -->
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsDueToday}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="#FFF0C8"/>
+                                        <Setter Property="Stroke" Value="#F5D090"/>
+                                    </DataTrigger>
+                                    <!-- Upcoming → pale gold -->
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsUpcomingSoon}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="#FFF8E0"/>
+                                        <Setter Property="Stroke" Value="#F5E0A0"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+
+                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="44,*,Auto">
+
+                                    <!-- Icon bubble — faded when inactive -->
+                                    <Border Grid.Column="0" Grid.RowSpan="3"
+                                            WidthRequest="38" HeightRequest="38"
+                                            BackgroundColor="{Binding CategoryColor}"
+                                            StrokeShape="RoundRectangle 10" Stroke="Transparent"
+                                            VerticalOptions="Center">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="False">
+                                                <Setter Property="Opacity" Value="0.45"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="True">
+                                                <Setter Property="Opacity" Value="1"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="{Binding CategoryIcon}" FontSize="18"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+
+                                    <!-- Name — blue when inactive -->
+                                    <Label Grid.Column="1" Grid.Row="0"
+                                           Text="{Binding Name}" FontSize="15"
+                                           FontAttributes="Bold" Margin="10,0,0,0">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="False">
+                                                <Setter Property="TextColor" Value="#5A9ABF"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="True">
+                                                <Setter Property="TextColor" Value="#0A0A0A"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+                                    <!-- Due info — blue when inactive -->
+                                    <HorizontalStackLayout Grid.Column="1" Grid.Row="1"
+                                                           Spacing="6" Margin="10,3,0,0">
+                                        <Label Text="{Binding DueDayDisplay}" FontSize="12">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="False">
+                                                    <Setter Property="TextColor" Value="#7BBDE0"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="True">
+                                                    <Setter Property="TextColor" Value="#1A4F72"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Label Text="·" FontSize="12" TextColor="#7BBDE0"/>
+                                        <Label Text="{Binding DaysUntilDue}" FontSize="12">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="False">
+                                                    <Setter Property="TextColor" Value="#7BBDE0"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="True">
+                                                    <Setter Property="TextColor" Value="#2E6A90"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </HorizontalStackLayout>
+
+                                    <!-- Status badge -->
+                                    <Border Grid.Column="1" Grid.Row="2"
+                                            StrokeThickness="1" StrokeShape="RoundRectangle 6"
+                                            Padding="8,3" Margin="10,5,0,0" HorizontalOptions="Start">
+                                        <Border.Triggers>
+                                            <!-- Inactive badge → blue box -->
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="False">
+                                                <Setter Property="BackgroundColor" Value="#C8DCEA"/>
+                                                <Setter Property="Stroke" Value="#90B8D0"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsPaidThisMonth}" Value="True">
+                                                <Setter Property="BackgroundColor" Value="#D6EEFA"/>
+                                                <Setter Property="Stroke" Value="#7BBDE0"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsOverdue}" Value="True">
+                                                <Setter Property="BackgroundColor" Value="#FAD4D4"/>
+                                                <Setter Property="Stroke" Value="#F0A8A8"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsDueToday}" Value="True">
+                                                <Setter Property="BackgroundColor" Value="#FFF0C8"/>
+                                                <Setter Property="Stroke" Value="#F5D090"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsUpcomingSoon}" Value="True">
+                                                <Setter Property="BackgroundColor" Value="#FFF8E0"/>
+                                                <Setter Property="Stroke" Value="#F5E0A0"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="{Binding BillStatus}"
+                                               FontSize="11" FontAttributes="Bold" CharacterSpacing="1">
+                                            <Label.Triggers>
+                                                <!-- Inactive badge text → blue -->
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="False">
+                                                    <Setter Property="TextColor" Value="#5A9ABF"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsPaidThisMonth}" Value="True">
+                                                    <Setter Property="TextColor" Value="#1A4F72"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsOverdue}" Value="True">
+                                                    <Setter Property="TextColor" Value="#8B2020"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsDueToday}" Value="True">
+                                                    <Setter Property="TextColor" Value="#7A5A00"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsUpcomingSoon}" Value="True">
+                                                    <Setter Property="TextColor" Value="#7A5A00"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Border>
+
+                                    <!-- Right: amount + actions -->
+                                    <VerticalStackLayout Grid.Column="2" Grid.RowSpan="3"
+                                                         HorizontalOptions="End" VerticalOptions="Center" Spacing="6">
+
+                                        <!-- Amount card — muted blue when inactive -->
+                                        <Border StrokeThickness="1" StrokeShape="RoundRectangle 10"
+                                                Padding="10,5" HorizontalOptions="End">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="False">
+                                                    <Setter Property="BackgroundColor" Value="#C8DCEA"/>
+                                                    <Setter Property="Stroke" Value="#90B8D0"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="#B8DEFA"/>
+                                                    <Setter Property="Stroke" Value="#7BBDE0"/>
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                            <Label Text="{Binding AmountDisplay}"
+                                                   FontSize="14" FontAttributes="Bold">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="False">
+                                                        <Setter Property="TextColor" Value="#5A9ABF"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="True">
+                                                        <Setter Property="TextColor" Value="#1A4F72"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </Border>
+
+                                        <!-- Mark Paid / Undo -->
+                                        <Border HorizontalOptions="End" StrokeThickness="1"
+                                                StrokeShape="RoundRectangle 8" Padding="8,4">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsPaidThisMonth}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="#D6EEFA"/>
+                                                    <Setter Property="Stroke" Value="#7BBDE0"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsPaidThisMonth}" Value="False">
+                                                    <Setter Property="BackgroundColor" Value="#B8DEFA"/>
+                                                    <Setter Property="Stroke" Value="#1A7BB9"/>
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                            <Label FontSize="13" FontAttributes="Bold">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsPaidThisMonth}" Value="True">
+                                                        <Setter Property="Text" Value="↩ Undo"/>
+                                                        <Setter Property="TextColor" Value="#1A4F72"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsPaidThisMonth}" Value="False">
+                                                        <Setter Property="Text" Value="✓ Mark Paid"/>
+                                                        <Setter Property="TextColor" Value="#1A7BB9"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.MarkPaidToggleCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Border>
+
+                                        <!-- Toggle + Delete -->
+                                        <HorizontalStackLayout Spacing="12" HorizontalOptions="End">
+                                            <Label Text="{Binding ActiveIcon}" FontSize="15">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleActiveCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                            <Label Text="✕" FontSize="15" TextColor="#C0392B">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </HorizontalStackLayout>
+
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <controls:BottomNavBar Grid.Row="1"/>
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="allyza.Views.SignUpPage"
+             BackgroundColor="#A8D4F0"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="28,48,28,36" Spacing="0">
+
+            <!-- ── HEADER CARD (always visible) ── -->
+            <Border Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 24"
+                    BackgroundColor="#D6EEFA" Padding="24,28" Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                    
+                    <Label FontSize="26" FontAttributes="Bold"
+                           TextColor="#1A4F72" HorizontalOptions="Center"
+                           FontFamily="Georgia">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding OtpStepVisible}" Value="False">
+                                <Setter Property="Text" Value="Create Account"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding OtpStepVisible}" Value="True">
+                                <Setter Property="Text" Value="Verify Your Email"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Label FontSize="13" TextColor="#2E6A90"
+                           HorizontalOptions="Center" HorizontalTextAlignment="Center">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding OtpStepVisible}" Value="False">
+                                <Setter Property="Text" Value="Join Personal Budget Management App Today"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding OtpStepVisible}" Value="True">
+                                <Setter Property="Text" Value="Enter the 6-digit code sent to your email"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ══════════════════════════════════════ -->
+            <!--  STEP 1 — SIGN UP FORM                 -->
+            <!-- ══════════════════════════════════════ -->
+            <Border IsVisible="{Binding FormStepVisible}"
+                    Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 24"
+                    BackgroundColor="#D6EEFA" Padding="24,28" Margin="0,0,0,16">
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- Name -->
+                    <Label Text="Full Name" TextColor="#1A4F72" FontSize="13"
+                           FontAttributes="Bold" Margin="2,0,0,6"/>
+                    <Border Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 14"
+                            BackgroundColor="#B8DEFA" Padding="14,4" Margin="0,0,0,18">
+                        <Entry Text="{Binding Name}" Placeholder="Jennie Kim"
+                               PlaceholderColor="#6A9FBF" TextColor="#102840"
+                               BackgroundColor="Transparent" FontSize="15"/>
+                    </Border>
+
+                    <!-- Email -->
+                    <Label Text="Email" TextColor="#1A4F72" FontSize="13"
+                           FontAttributes="Bold" Margin="2,0,0,6"/>
+                    <Border Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 14"
+                            BackgroundColor="#B8DEFA" Padding="14,4" Margin="0,0,0,18">
+                        <Entry Text="{Binding Email}" Placeholder="you@gmail.com"
+                               PlaceholderColor="#6A9FBF" TextColor="#102840"
+                               Keyboard="Email" BackgroundColor="Transparent" FontSize="15"/>
+                    </Border>
+
+                    <!-- Password -->
+                    <Label Text="Password" TextColor="#1A4F72" FontSize="13"
+                           FontAttributes="Bold" Margin="2,0,0,6"/>
+                    <Border Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 14"
+                            BackgroundColor="#B8DEFA" Padding="14,4" Margin="0,0,0,18">
+                        <Entry Text="{Binding Password}" Placeholder="At least 6 characters"
+                               PlaceholderColor="#6A9FBF" TextColor="#102840"
+                               IsPassword="True" BackgroundColor="Transparent" FontSize="15"/>
+                    </Border>
+
+                    <!-- Confirm Password -->
+                    <Label Text="Confirm Password" TextColor="#1A4F72" FontSize="13"
+                           FontAttributes="Bold" Margin="2,0,0,6"/>
+                    <Border Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 14"
+                            BackgroundColor="#B8DEFA" Padding="14,4" Margin="0,0,0,6">
+                        <Entry Text="{Binding Confirm}" Placeholder="Repeat password"
+                               PlaceholderColor="#6A9FBF" TextColor="#102840"
+                               IsPassword="True" BackgroundColor="Transparent" FontSize="15"/>
+                    </Border>
+
+                    <!-- Error -->
+                    <Label Text="{Binding ErrorMessage}" TextColor="#C0392B" FontSize="13"
+                           IsVisible="{Binding HasError}" Margin="2,8,0,0"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Create Account button -->
+            <Button IsVisible="{Binding FormStepVisible}"
+                    Text="Create Account" Command="{Binding SignUpCommand}"
+                    BackgroundColor="#1A7BB9" TextColor="White"
+                    FontAttributes="Bold" FontSize="16"
+                    CornerRadius="16" HeightRequest="54" Margin="0,0,0,0"
+                    Shadow="{Shadow Brush='#801A7BB9', Offset='0,4', Radius='12'}"/>
+
+            <!-- ══════════════════════════════════════ -->
+            <!--  STEP 2 — OTP VERIFICATION             -->
+            <!-- ══════════════════════════════════════ -->
+            <Border IsVisible="{Binding OtpStepVisible}"
+                    Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 24"
+                    BackgroundColor="#D6EEFA" Padding="24,28" Margin="0,0,0,16">
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- Email badge -->
+                    <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0" StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12" Padding="14,10" Margin="0,0,0,22">
+                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                          
+                            <Label Text="{Binding Email}" FontSize="14" FontAttributes="Bold"
+                                   TextColor="#1A4F72" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <!-- Success (code sent) -->
+                    <Border IsVisible="{Binding HasSuccess}"
+                            BackgroundColor="#C8F0DC" Stroke="#4CAF82" StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12" Padding="12,10" Margin="0,0,0,16">
+                        <Label Text="{Binding SuccessMessage}" TextColor="#1A6640"
+                               FontSize="13" HorizontalTextAlignment="Center"/>
+                    </Border>
+
+                    <!-- OTP label -->
+                    <Label Text="Verification Code" TextColor="#1A4F72" FontSize="13"
+                           FontAttributes="Bold" Margin="2,0,0,6"/>
+
+                    <!-- OTP Entry — large centered digits -->
+                    <Border Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 14"
+                            BackgroundColor="#B8DEFA" Padding="14,8" Margin="0,0,0,6">
+                        <Entry Text="{Binding OtpCode}"
+                               Placeholder="• • • • • •"
+                               PlaceholderColor="#6A9FBF" TextColor="#102840"
+                               Keyboard="Numeric" MaxLength="6"
+                               BackgroundColor="Transparent"
+                               FontSize="32" FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               CharacterSpacing="10"/>
+                    </Border>
+
+                    <Label Text="Check your inbox and spam folder"
+                           FontSize="12" TextColor="#5A9ABF"
+                           HorizontalOptions="Center" Margin="0,4,0,0"/>
+
+                    <!-- Error -->
+                    <Label Text="{Binding ErrorMessage}" TextColor="#C0392B" FontSize="13"
+                           IsVisible="{Binding HasError}"
+                           Margin="2,12,0,0" HorizontalTextAlignment="Center"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Verify button -->
+            <Button IsVisible="{Binding OtpStepVisible}"
+                    Text="Verify Code" Command="{Binding VerifyCommand}"
+                    BackgroundColor="#1A7BB9" TextColor="White"
+                    FontAttributes="Bold" FontSize="16"
+                    CornerRadius="16" HeightRequest="54" Margin="0,0,0,12"
+                    Shadow="{Shadow Brush='#801A7BB9', Offset='0,4', Radius='12'}"/>
+
+            <!-- Resend button -->
+            <Button IsVisible="{Binding OtpStepVisible}"
+                    Text="{Binding ResendLabel}"
+                    Command="{Binding ResendCommand}"
+                    IsEnabled="{Binding ResendEnabled}"
+                    BackgroundColor="#D6EEFA" TextColor="#1A4F72"
+                    FontAttributes="Bold" FontSize="15"
+                    CornerRadius="16" HeightRequest="48"
+                    BorderColor="#7BBDE0" BorderWidth="1.5"
+                    Margin="0,0,0,0"/>
+
+            <!-- Activity indicator -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                               Color="#1A7BB9" Margin="0,14,0,0" HorizontalOptions="Center"/>
+
+            <!-- Sign In link (step 1 only) -->
+            <HorizontalStackLayout IsVisible="{Binding FormStepVisible}"
+                                   HorizontalOptions="Center" Spacing="6" Margin="0,22,0,0">
+                <Label Text="Already have an account?" TextColor="#1A4F72" FontSize="14"/>
+                <Label Text="Sign In" TextColor="#0D2E45" FontSize="14" FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BackCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+           
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

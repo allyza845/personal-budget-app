@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="allyza.Views.LoginPage"
+             BackgroundColor="#A8D4F0"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="28,64,28,36" Spacing="0">
+
+            <!-- Header Card -->
+            <Border Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 24"
+                    BackgroundColor="#D6EEFA" Padding="24,28" Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+
+                    <Label Text="Welcome Back!" FontSize="26" FontAttributes="Bold"
+                           TextColor="#1A4F72" HorizontalOptions="Center"
+                           FontFamily="Georgia"/>
+                    <Label Text="Sign in to your account"
+                           FontSize="13" TextColor="#2E6A90"
+                           HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Form Card -->
+            <Border Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 24"
+                    BackgroundColor="#D6EEFA" Padding="24,28" Margin="0,0,0,16">
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- Email -->
+                    <Label Text="Email" TextColor="#1A4F72" FontSize="13"
+                           FontAttributes="Bold" Margin="2,0,0,6"/>
+                    <Border Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 14"
+                            BackgroundColor="#B8DEFA" Padding="14,4" Margin="0,0,0,18">
+                        <Entry Text="{Binding Email}" Placeholder="you@gmail.com"
+                               PlaceholderColor="#6A9FBF" TextColor="#102840"
+                               Keyboard="Email" BackgroundColor="Transparent" FontSize="15"/>
+                    </Border>
+
+                    <!-- Password -->
+                    <Label Text="Password" TextColor="#1A4F72" FontSize="13"
+                           FontAttributes="Bold" Margin="2,0,0,6"/>
+                    <Border Stroke="#7BBDE0" StrokeThickness="1.5" StrokeShape="RoundRectangle 14"
+                            BackgroundColor="#B8DEFA" Padding="14,4" Margin="0,0,0,6">
+                        <Entry Text="{Binding Password}" Placeholder="••••••••"
+                               PlaceholderColor="#6A9FBF" TextColor="#102840"
+                               IsPassword="True" BackgroundColor="Transparent" FontSize="15"/>
+                    </Border>
+
+                    <!-- Error -->
+                    <Label Text="{Binding ErrorMessage}" TextColor="#C0392B" FontSize="13"
+                           IsVisible="{Binding HasError}" Margin="2,6,0,4"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Sign In Button -->
+            <Button Text="Sign In" Command="{Binding LoginCommand}"
+                    IsEnabled="{Binding IsNotBusy}"
+                    BackgroundColor="#1A7BB9" TextColor="White"
+                    FontAttributes="Bold" FontSize="16"
+                    CornerRadius="16" HeightRequest="54" Margin="0,4,0,0"
+                    Shadow="{Shadow Brush='#801A7BB9', Offset='0,4', Radius='12'}"/>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                               Color="#1A7BB9" Margin="0,12,0,0" HorizontalOptions="Center"/>
+
+            <!-- Sign Up Link -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,22,0,0">
+                <Label Text="Don't have an account?" TextColor="#1A4F72" FontSize="14"/>
+                <Label Text="Create one" TextColor="#0D2E45" FontSize="14" FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToSignUpCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+          
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

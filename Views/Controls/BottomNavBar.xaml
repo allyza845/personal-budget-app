@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="allyza.Views.Controls.BottomNavBar">
+
+    <Border BackgroundColor="#2472A4"
+            Stroke="#2472A4" StrokeThickness="0"
+            StrokeShape="RoundRectangle 0">
+
+        <Grid RowDefinitions="Auto,Auto">
+
+            <!-- ── EXPANDED PANEL (hidden by default) ── -->
+            <Border Grid.Row="0" x:Name="ExpandedPanel"
+                    IsVisible="False"
+                    BackgroundColor="#1A4F72"
+                    Stroke="Transparent"
+                    Padding="12,2,12,0"
+                    Margin="0,0,0,4">
+
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="6" Padding="2,0"
+                                           HorizontalOptions="Center">
+
+                        <!-- Home -->
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center" WidthRequest="64">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnHomeTapped"/>
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Border x:Name="HomeBox" WidthRequest="44" HeightRequest="36"
+                                    BackgroundColor="#A8D4F0" Stroke="Transparent" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 8" HorizontalOptions="Center">
+                                <Label Text="🏠" FontSize="18"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="White"/>
+                            </Border>
+                            <Label x:Name="HomeLabel" Text="Home" FontSize="11"
+                                   FontAttributes="Bold" TextColor="#A8D4F0"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                        <!-- Income -->
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center" WidthRequest="64">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnIncomeTapped"/>
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Border x:Name="IncomeBox" WidthRequest="44" HeightRequest="36"
+                                    BackgroundColor="#A8D4F0" Stroke="Transparent" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 8" HorizontalOptions="Center">
+                                <Label Text="💰" FontSize="18"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="White"/>
+                            </Border>
+                            <Label x:Name="IncomeLabel" Text="Income" FontSize="11"
+                                   FontAttributes="Bold" TextColor="#A8D4F0"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+
+                        <!-- Categories -->
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center" WidthRequest="64">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCategoriesTapped"/>
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Border x:Name="CategoriesBox" WidthRequest="44" HeightRequest="36"
+              BackgroundColor="#A8D4F0" Stroke="Transparent" StrokeThickness="0"
+              StrokeShape="RoundRectangle 8" HorizontalOptions="Center">
+                                <Label Text="🗂️" FontSize="18"
+                 HorizontalOptions="Center" VerticalOptions="Center"
+                 TextColor="White"/>
+                            </Border>
+                            <Label x:Name="CategoriesLabel" Text="Categories" FontSize="11"
+             FontAttributes="Bold" TextColor="#A8D4F0"
+             HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                        
+                        <!-- Expenses -->
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center" WidthRequest="64">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnExpensesTapped"/>
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Border x:Name="ExpensesBox" WidthRequest="44" HeightRequest="36"
+                                    BackgroundColor="#A8D4F0" Stroke="Transparent" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 8" HorizontalOptions="Center">
+                                <Label Text="💸" FontSize="18"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="White"/>
+                            </Border>
+                            <Label x:Name="ExpensesLabel" Text="Expenses" FontSize="11"
+                                   FontAttributes="Bold" TextColor="#A8D4F0"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                        <!-- Fixed -->
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center" WidthRequest="64">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnFixedTapped"/>
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Border x:Name="FixedBox" WidthRequest="44" HeightRequest="36"
+             BackgroundColor="#A8D4F0" Stroke="Transparent" StrokeThickness="0"
+             StrokeShape="RoundRectangle 8" HorizontalOptions="Center">
+                                <Label Text="📌" FontSize="18"
+                HorizontalOptions="Center" VerticalOptions="Center"
+                TextColor="White"/>
+                            </Border>
+                            <Label x:Name="FixedLabel" Text="Fixed" FontSize="11"
+            FontAttributes="Bold" TextColor="#A8D4F0"
+            HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                        <!-- Analytics -->
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center" WidthRequest="64">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAnalyticsTapped"/>
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Border x:Name="AnalyticsBox" WidthRequest="44" HeightRequest="36"
+                                    BackgroundColor="#A8D4F0" Stroke="Transparent" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 8" HorizontalOptions="Center">
+                                <Label Text="📊" FontSize="18"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="White"/>
+                            </Border>
+                            <Label x:Name="AnalyticsLabel" Text="Analytics" FontSize="11"
+                                   FontAttributes="Bold" TextColor="#A8D4F0"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                       
+
+                      
+
+                        <!-- History -->
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center" WidthRequest="64">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnHistoryTapped"/>
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Border x:Name="HistoryBox" WidthRequest="44" HeightRequest="36"
+             BackgroundColor="#A8D4F0" Stroke="Transparent" StrokeThickness="0"
+             StrokeShape="RoundRectangle 8" HorizontalOptions="Center">
+                                <Label Text="🕐" FontSize="18"
+                HorizontalOptions="Center" VerticalOptions="Center"
+                TextColor="White"/>
+                            </Border>
+                            <Label x:Name="HistoryLabel" Text="History" FontSize="11"
+            FontAttributes="Bold" TextColor="#A8D4F0"
+            HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                        <!-- Profile -->
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center" WidthRequest="64">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnProfileTapped"/>
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Border x:Name="ProfileBox" WidthRequest="44" HeightRequest="36"
+                                    BackgroundColor="#A8D4F0" Stroke="Transparent" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 8" HorizontalOptions="Center">
+                                <Label Text="👤" FontSize="18"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="White"/>
+                            </Border>
+                            <Label x:Name="ProfileLabel" Text="Profile" FontSize="11"
+                                   FontAttributes="Bold" TextColor="#A8D4F0"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                        <!-- About -->
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center" WidthRequest="64">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAboutTapped"/>
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Border x:Name="AboutBox" WidthRequest="44" HeightRequest="36"
+                                    BackgroundColor="#5BA8D8" Stroke="Transparent" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 8" HorizontalOptions="Center">
+                                <Label Text="ℹ️" FontSize="18"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="White"/>
+                            </Border>
+                            <Label x:Name="AboutLabel" Text="About" FontSize="11"
+                                   FontAttributes="Bold" TextColor="#A8D4F0"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                    </HorizontalStackLayout>
+                </ScrollView>
+            </Border>
+
+            <!-- ── COLLAPSED BAR — always visible ── -->
+            <Grid Grid.Row="1" Padding="20,4,20,5"
+                  ColumnDefinitions="*,Auto,*">
+
+                <!-- Current page name (left) -->
+                <Label Grid.Column="0"
+                       x:Name="CurrentPageLabel"
+                       Text="Home" FontSize="17" FontAttributes="Bold"
+                       TextColor="White"
+                       VerticalOptions="Center"
+                       TextTransform="Uppercase"
+                       HorizontalOptions="Start"/>
+
+                <!-- Active tab icon preview (center) -->
+                <Border Grid.Column="1"
+                        x:Name="ActiveIconPreview"
+                        WidthRequest="44" HeightRequest="40"
+                        BackgroundColor="#A8D4F0"
+                        Stroke="Transparent" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 12"
+                        HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label x:Name="ActiveIconImage"
+                           Text="🏠" FontSize="24"
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           TextColor="White"/>
+                </Border>
+
+                <!-- Menu toggle button (right) -->
+                <VerticalStackLayout Grid.Column="2"
+                                     Spacing="1"
+                                     HorizontalOptions="End"
+                                     VerticalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMenuToggleTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label x:Name="MenuIcon" Text="☰" FontSize="24"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+                    <Label x:Name="MenuLabel" Text="Menu" FontSize="15"
+                           FontAttributes="Bold" TextColor="White"
+                            TextTransform="Uppercase"
+                           HorizontalOptions="Center"/>
+                    
+                </VerticalStackLayout>
+
+            </Grid>
+
+        </Grid>
+
+    </Border>
+
+</ContentView>

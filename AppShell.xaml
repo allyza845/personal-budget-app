@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:allyza.Views"
+       x:Class="allyza.AppShell"
+       Shell.NavBarIsVisible="False"
+       FlyoutBehavior="Disabled">
+
+    <ShellContent Title="Home"       Route="dashboard"  ContentTemplate="{DataTemplate views:DashboardPage}"/>
+    <ShellContent Title="Income"     Route="income"     ContentTemplate="{DataTemplate views:AddIncomePage}"/>
+    <ShellContent Title="Expenses"   Route="expenses"   ContentTemplate="{DataTemplate views:AddExpensePage}"/>
+    <ShellContent Title="Fixed"      Route="fixed"      ContentTemplate="{DataTemplate views:FixedExpensePage}"/>
+    <ShellContent Title="History"    Route="history"    ContentTemplate="{DataTemplate views:TransactionHistoryPage}"/>
+    <ShellContent Title="Analytics"  Route="analytics"  ContentTemplate="{DataTemplate views:AnalyticsPage}"/>
+    <ShellContent Title="Categories" Route="categories" ContentTemplate="{DataTemplate views:CategoryPage}"/>
+    <ShellContent Title="Profile"    Route="profile"    ContentTemplate="{DataTemplate views:ProfilePage}"/>
+    <ShellContent Title="About" Route="about"
+              ContentTemplate="{DataTemplate views:AboutPage}"/>
+</Shell>

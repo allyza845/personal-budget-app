@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:allyza.Views.Controls"
+             x:Class="allyza.Views.AboutPage"
+             BackgroundColor="#A8D4F0"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="22,48,22,16" Spacing="0">
+
+                <!-- HEADER -->
+                <Grid ColumnDefinitions="Auto,*" Margin="0,0,0,20">
+
+                    <!-- App Icon -->
+                    <Border Grid.Column="0"
+                            WidthRequest="46" HeightRequest="46"
+                            BackgroundColor="#1A4F72"
+                            Stroke="Transparent" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 14"
+                            VerticalOptions="Center"
+                            Margin="0,0,12,0">
+                        <Image 
+    Source="home.png"
+    WidthRequest="64"
+    HeightRequest="64"
+    HorizontalOptions="Center"
+    />
+                    </Border>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                        <Label Text="About"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#0A0A0A" FontFamily="Georgia"/>
+                        <Label Text="Your personal finance companion"
+                               FontSize="14" TextColor="#2E6A90"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- INTRO CARD -->
+                <Border BackgroundColor="#D6EEFA" Stroke="#7BBDE0" StrokeThickness="1.5"
+                        StrokeShape="RoundRectangle 20" Padding="20,18" Margin="0,0,0,12">
+                    <VerticalStackLayout Spacing="12">
+                        
+
+                        <Label Text="WHAT IS PERSONAL BUDGET MANAGEMENT APP?" FontSize="12"
+                               TextColor="#1A4F72" CharacterSpacing="2" FontAttributes="Bold"/>
+
+                        <Label FontSize="15" TextColor="#2E6A90" LineHeight="1.5"   HorizontalTextAlignment="Justify">
+                            <Label.Text>Personal Budget Management App is a personal finance companion designed to help you take control of your money. Built with everyday budgeting in mind, it gives you a complete picture of your financial life in one place, so you always know where your money comes from, where it goes, and how well you're sticking to your goals.</Label.Text>
+                        </Label>
+
+                       
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- FEATURES SECTION -->
+                <Border BackgroundColor="#D6EEFA" Stroke="#7BBDE0" StrokeThickness="1.5"
+                        StrokeShape="RoundRectangle 20" Padding="20,18" Margin="0,0,0,12">
+                    <VerticalStackLayout Spacing="14">
+
+                        <Label Text="FEATURES" FontSize="12"
+                               TextColor="#1A4F72" CharacterSpacing="2" FontAttributes="Bold"/>
+
+                        <!-- Dashboard -->
+                        <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14,12">
+                            <Grid ColumnDefinitions="42,*">
+                                <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                                        BackgroundColor="#1A4F72" Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Label Text="🏠" FontSize="18"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2"
+                                                     Margin="10,0,0,0" VerticalOptions="Center">
+                                    <Label Text="Dashboard" FontSize="15"
+                                           FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                    <Label Text="Quick overview of your balance, spending, and upcoming bills."
+                                           FontSize="13" TextColor="#2E6A90" LineHeight="1.4"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                        <!-- Income -->
+                        <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14,12">
+                            <Grid ColumnDefinitions="42,*">
+                                <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                                         BackgroundColor="#1A4F72" Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Label Text="💰" FontSize="18"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2"
+                                                     Margin="10,0,0,0" VerticalOptions="Center">
+                                    <Label Text="Income" FontSize="15"
+                                           FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                    <Label Text="Log and monitor all your income sources in one place."
+                                           FontSize="13" TextColor="#2E6A90" LineHeight="1.4"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                        <!-- Expenses -->
+                        <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14,12">
+                            <Grid ColumnDefinitions="42,*">
+                                <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                                          BackgroundColor="#1A4F72" Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Label Text="💸" FontSize="18"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2"
+                                                     Margin="10,0,0,0" VerticalOptions="Center">
+                                    <Label Text="Expenses" FontSize="15"
+                                           FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                    <Label Text="Record your spending and see exactly where your money goes."
+                                           FontSize="13" TextColor="#2E6A90" LineHeight="1.4"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                        <!-- History -->
+                        <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14,12">
+                            <Grid ColumnDefinitions="42,*">
+                                <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                                        BackgroundColor="#1A4F72" Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Label Text="🕐" FontSize="18"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2"
+                                                     Margin="10,0,0,0" VerticalOptions="Center">
+                                    <Label Text="History" FontSize="15"
+                                           FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                    <Label Text="Review all past transactions and spot spending patterns."
+                                           FontSize="13" TextColor="#2E6A90" LineHeight="1.4"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                        <!-- Analytics -->
+                        <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14,12">
+                            <Grid ColumnDefinitions="42,*">
+                                <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                                         BackgroundColor="#1A4F72" Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Label Text="📊" FontSize="18"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2"
+                                                     Margin="10,0,0,0" VerticalOptions="Center">
+                                    <Label Text="Analytics" FontSize="15"
+                                           FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                    <Label Text="Visualize trends and insights to make smarter financial decisions."
+                                           FontSize="13" TextColor="#2E6A90" LineHeight="1.4"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                        <!-- Fixed -->
+                        <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14,12">
+                            <Grid ColumnDefinitions="42,*">
+                                <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                                        BackgroundColor="#1A4F72" Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Label Text="📌" FontSize="18"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2"
+                                                     Margin="10,0,0,0" VerticalOptions="Center">
+                                    <Label Text="Fixed Expenses" FontSize="15"
+                                           FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                    <Label Text="Manage recurring bills and never miss a payment again."
+                                           FontSize="13" TextColor="#2E6A90" LineHeight="1.4"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                        <!-- Categories -->
+                        <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14,12">
+                            <Grid ColumnDefinitions="42,*">
+                                <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                                        BackgroundColor="#1A4F72" Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Label Text="🗂️" FontSize="18"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2"
+                                                     Margin="10,0,0,0" VerticalOptions="Center">
+                                    <Label Text="Categories" FontSize="15"
+                                           FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                    <Label Text="Organize transactions into custom categories for better clarity."
+                                           FontSize="13" TextColor="#2E6A90" LineHeight="1.4"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                        <!-- Profile -->
+                        <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14,12">
+                            <Grid ColumnDefinitions="42,*">
+                                <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                                        BackgroundColor="#1A4F72" Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Label Text="👤" FontSize="18"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2"
+                                                     Margin="10,0,0,0" VerticalOptions="Center">
+                                    <Label Text="Profile" FontSize="15"
+                                           FontAttributes="Bold" TextColor="#0A0A0A"/>
+                                    <Label Text="Personalize your experience and manage your account settings."
+                                           FontSize="13" TextColor="#2E6A90" LineHeight="1.4"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- VERSION CARD -->
+                <Border BackgroundColor="#D6EEFA" Stroke="#7BBDE0" StrokeThickness="1.5"
+                        StrokeShape="RoundRectangle 20" Padding="20,18" Margin="0,0,0,12">
+                    <VerticalStackLayout Spacing="10">
+
+                        <Label Text="ℹ️  APP INFO" FontSize="12"
+                               TextColor="#1A4F72" CharacterSpacing="2" FontAttributes="Bold"/>
+
+                        <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="14,10">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Version"
+                                       FontSize="14" TextColor="#1A4F72" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="1.0.0"
+                                       FontSize="14" FontAttributes="Bold"
+                                       TextColor="#0A0A0A" VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+
+                        
+
+                        <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
+                                StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="14,10">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Developer"
+                                       FontSize="14" TextColor="#1A4F72" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="Allyza G. Mondano and Proslyn Mark S. Tapinit"
+                                       FontSize="14" FontAttributes="Bold"
+                                       TextColor="#0A0A0A" VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+
+                    </VerticalStackLayout>
+                </Border>
+
+             
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <controls:BottomNavBar Grid.Row="1"/>
+    </Grid>
+
+</ContentPage>

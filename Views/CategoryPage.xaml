@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:allyza.Views.Controls"
+             xmlns:models="clr-namespace:allyza.Models"
+             x:Class="allyza.Views.CategoryPage"
+             Title="Categories"
+             BackgroundColor="#A8D4F0"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="22,20,22,16" Spacing="0">
+
+                <!-- Header -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="Categories" FontSize="30" FontAttributes="Bold"
+                               TextColor="#0A0A0A" FontFamily="Georgia"/>
+                        <Label Text="Manage your categories" FontSize="15" TextColor="#2E6A90"/>
+                    </VerticalStackLayout>
+                    <ActivityIndicator Grid.Column="1"
+                                       IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                                       Color="#1A7BB9" WidthRequest="28" HeightRequest="28"/>
+                </Grid>
+
+                <!-- Add Category Card -->
+                <Border BackgroundColor="#D6EEFA" Stroke="#7BBDE0" StrokeThickness="1.5"
+                        StrokeShape="RoundRectangle 20" Padding="20" Margin="0,0,0,20">
+                    <VerticalStackLayout Spacing="16">
+
+                        <Label Text="ADD NEW CATEGORY" TextColor="#1A4F72"
+                               FontSize="13" CharacterSpacing="2" FontAttributes="Bold"/>
+
+                        <!-- Name -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Category Name" TextColor="#1A4F72" FontSize="13" FontAttributes="Bold"/>
+                            <Border Stroke="#7BBDE0" StrokeThickness="1.5"
+                                    StrokeShape="RoundRectangle 14" BackgroundColor="#B8DEFA" Padding="14,10">
+                                <Entry Text="{Binding Name}" Placeholder="e.g. Groceries, Gym…"
+                                       PlaceholderColor="#6A9FBF" TextColor="#0A0A0A"
+                                       FontSize="15" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Monthly Budget -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Monthly Budget (optional)" TextColor="#1A4F72" FontSize="13" FontAttributes="Bold"/>
+                            <Border Stroke="#7BBDE0" StrokeThickness="1.5"
+                                    StrokeShape="RoundRectangle 14" BackgroundColor="#B8DEFA" Padding="0">
+                                <Grid ColumnDefinitions="44,*">
+                                    <Label Grid.Column="0" Text="₱" FontSize="18" FontAttributes="Bold"
+                                           TextColor="#1A7BB9" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Entry Grid.Column="1" Text="{Binding BudgetText}"
+                                           Placeholder="0.00" PlaceholderColor="#6A9FBF"
+                                           TextColor="#0A0A0A" FontSize="15"
+                                           Keyboard="Numeric" BackgroundColor="Transparent"
+                                           Margin="0,10,14,10"/>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Icon picker -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Icon" TextColor="#1A4F72" FontSize="13" FontAttributes="Bold"/>
+                            <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start">
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#EAD9F5" Stroke="#C9A8E8" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="🍔"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="🍔" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#C8EAF5" Stroke="#90C8E0" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="🚗"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="🚗" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#C8E8F0" Stroke="#90C8D8" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="🏠"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="🏠" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#C8F0DC" Stroke="#90D8B0" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="💊"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="💊" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#FAE8C8" Stroke="#E8C890" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="🎮"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="🎮" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#FAD8E8" Stroke="#E8A8C8" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="🛍️"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="🛍️" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#EAD9F5" Stroke="#C9A8E8" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="📚"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="📚" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#FFF0C8" Stroke="#E8D090" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="💡"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="💡" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#C8F0DC" Stroke="#90D8B0" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="🏦"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="🏦" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#C8EAF5" Stroke="#90C8E0" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="✈️"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="✈️" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#FAD8E8" Stroke="#E8A8C8" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="🎵"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="🎵" FontSize="20"/>
+                                </Border>
+                                <Border Margin="0,0,8,8" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="#FAE8C8" Stroke="#E8C890" Padding="10,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectIconCommand}" CommandParameter="🐾"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="🐾" FontSize="20"/>
+                                </Border>
+                            </FlexLayout>
+
+                            <!-- Selected icon preview -->
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="Selected:" TextColor="#1A4F72" FontSize="13"
+                                       FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Border BackgroundColor="#EAD9F5" Stroke="#C9A8E8" StrokeThickness="1.5"
+                                        StrokeShape="RoundRectangle 12" Padding="10,6">
+                                    <Label Text="{Binding Icon}" FontSize="22"/>
+                                </Border>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Color picker — all pastel -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Color" TextColor="#1A4F72" FontSize="13" FontAttributes="Bold"/>
+                            <HorizontalStackLayout Spacing="10">
+
+                                <!-- Pastel Violet -->
+                                <Border WidthRequest="36" HeightRequest="36" BackgroundColor="#C9A8E8"
+                                        StrokeShape="Ellipse" StrokeThickness="2.5">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsViolet}" Value="True">
+                                            <Setter Property="Stroke" Value="#1A4F72"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsViolet}" Value="False">
+                                            <Setter Property="Stroke" Value="Transparent"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetColorCommand}" CommandParameter="#C9A8E8"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <!-- Pastel Green -->
+                                <Border WidthRequest="36" HeightRequest="36" BackgroundColor="#90D8B0"
+                                        StrokeShape="Ellipse" StrokeThickness="2.5">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsGreen}" Value="True">
+                                            <Setter Property="Stroke" Value="#1A4F72"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsGreen}" Value="False">
+                                            <Setter Property="Stroke" Value="Transparent"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetColorCommand}" CommandParameter="#90D8B0"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <!-- Pastel Pink/Red -->
+                                <Border WidthRequest="36" HeightRequest="36" BackgroundColor="#F0A8A8"
+                                        StrokeShape="Ellipse" StrokeThickness="2.5">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsRed}" Value="True">
+                                            <Setter Property="Stroke" Value="#1A4F72"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsRed}" Value="False">
+                                            <Setter Property="Stroke" Value="Transparent"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetColorCommand}" CommandParameter="#F0A8A8"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <!-- Pastel Amber -->
+                                <Border WidthRequest="36" HeightRequest="36" BackgroundColor="#F5D090"
+                                        StrokeShape="Ellipse" StrokeThickness="2.5">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsAmber}" Value="True">
+                                            <Setter Property="Stroke" Value="#1A4F72"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsAmber}" Value="False">
+                                            <Setter Property="Stroke" Value="Transparent"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetColorCommand}" CommandParameter="#F5D090"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <!-- Pastel Cyan/Blue -->
+                                <Border WidthRequest="36" HeightRequest="36" BackgroundColor="#90C8E0"
+                                        StrokeShape="Ellipse" StrokeThickness="2.5">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsCyan}" Value="True">
+                                            <Setter Property="Stroke" Value="#1A4F72"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsCyan}" Value="False">
+                                            <Setter Property="Stroke" Value="Transparent"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetColorCommand}" CommandParameter="#90C8E0"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <!-- Pastel Pink -->
+                                <Border WidthRequest="36" HeightRequest="36" BackgroundColor="#F5A8C8"
+                                        StrokeShape="Ellipse" StrokeThickness="2.5">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsPink}" Value="True">
+                                            <Setter Property="Stroke" Value="#1A4F72"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsPink}" Value="False">
+                                            <Setter Property="Stroke" Value="Transparent"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetColorCommand}" CommandParameter="#F5A8C8"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Error / Success -->
+                        <Label Text="{Binding ErrorMessage}" TextColor="#C0392B"
+                               FontSize="13" IsVisible="{Binding HasError}"/>
+                        <Label Text="{Binding SuccessMessage}" TextColor="#1A6640"
+                               FontSize="13" IsVisible="{Binding HasSuccess}"
+                               HorizontalOptions="Center" FontAttributes="Bold"/>
+
+                        <!-- Save Button -->
+                        <Button Text="SAVE CATEGORY" Command="{Binding SaveCommand}"
+                                IsEnabled="{Binding IsNotBusy}"
+                                BackgroundColor="#1A7BB9" TextColor="White"
+                                FontAttributes="Bold" FontSize="17"
+                                CornerRadius="14" HeightRequest="50"
+                                Shadow="{Shadow Brush='#801A7BB9', Offset='0,4', Radius='10'}"/>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Categories List -->
+                <Label Text="ALL CATEGORIES" TextColor="#1A4F72"
+                       FontSize="13" CharacterSpacing="2" FontAttributes="Bold" Margin="0,0,0,12"/>
+
+                <CollectionView ItemsSource="{Binding Categories}" SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="8"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:CategoryModel">
+                            <Border StrokeThickness="1.5" StrokeShape="RoundRectangle 16" Padding="16,12">
+
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsCustom}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="#EAD9F5"/>
+                                        <Setter Property="Stroke" Value="#C9A8E8"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsCustom}" Value="False">
+                                        <Setter Property="BackgroundColor" Value="#D6EEFA"/>
+                                        <Setter Property="Stroke" Value="#7BBDE0"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+
+                                <Grid ColumnDefinitions="44,*,Auto">
+
+                                    <!-- Icon bubble -->
+                                    <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                            BackgroundColor="{Binding Color}"
+                                            StrokeShape="RoundRectangle 10" Stroke="Transparent">
+                                        <Label Text="{Binding Icon}" FontSize="18"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+
+                                    <!-- Name + badges -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="5"
+                                                         VerticalOptions="Center" Margin="10,0,0,0">
+                                        <Label Text="{Binding Name}" FontSize="15"
+                                               FontAttributes="Bold" TextColor="#0A0A0A"/>
+
+                                        <HorizontalStackLayout Spacing="6">
+
+                                            <!-- Budget badge -->
+                                            <Border StrokeShape="RoundRectangle 6" Padding="7,3" StrokeThickness="1">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding HasBudget}" Value="True">
+                                                        <Setter Property="BackgroundColor" Value="#C8F0DC"/>
+                                                        <Setter Property="Stroke" Value="#90D8B0"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding HasBudget}" Value="False">
+                                                        <Setter Property="BackgroundColor" Value="#D6EEFA"/>
+                                                        <Setter Property="Stroke" Value="#7BBDE0"/>
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Label Text="{Binding BudgetDisplay}" FontSize="12"
+                                                       TextColor="{Binding BudgetColor}"/>
+                                            </Border>
+
+                                            <!-- Default / Custom badge -->
+                                            <Border StrokeShape="RoundRectangle 6" Padding="6,3" StrokeThickness="1">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding IsCustom}" Value="False">
+                                                        <Setter Property="BackgroundColor" Value="#C8EAF5"/>
+                                                        <Setter Property="Stroke" Value="#90C8E0"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding IsCustom}" Value="True">
+                                                        <Setter Property="BackgroundColor" Value="#EAD9F5"/>
+                                                        <Setter Property="Stroke" Value="#C9A8E8"/>
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Label FontSize="11" FontAttributes="Bold" CharacterSpacing="0.5">
+                                                    <Label.Triggers>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsCustom}" Value="False">
+                                                            <Setter Property="Text" Value="DEFAULT"/>
+                                                            <Setter Property="TextColor" Value="#1A4F72"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsCustom}" Value="True">
+                                                            <Setter Property="Text" Value="CUSTOM"/>
+                                                            <Setter Property="TextColor" Value="#7A4FB0"/>
+                                                        </DataTrigger>
+                                                    </Label.Triggers>
+                                                </Label>
+                                            </Border>
+
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <!-- Actions -->
+                                    <VerticalStackLayout Grid.Column="2" Spacing="8"
+                                                         HorizontalOptions="End" VerticalOptions="Center">
+
+                                        <Border StrokeShape="RoundRectangle 8" Padding="8,4" StrokeThickness="1">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding HasBudget}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="#C8F0DC"/>
+                                                    <Setter Property="Stroke" Value="#90D8B0"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding HasBudget}" Value="False">
+                                                    <Setter Property="BackgroundColor" Value="#EAD9F5"/>
+                                                    <Setter Property="Stroke" Value="#C9A8E8"/>
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                            <Label FontSize="12" FontAttributes="Bold">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding HasBudget}" Value="True">
+                                                        <Setter Property="Text" Value="✏️ Edit Budget"/>
+                                                        <Setter Property="TextColor" Value="#1A6640"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding HasBudget}" Value="False">
+                                                        <Setter Property="Text" Value="💰 Set Budget"/>
+                                                        <Setter Property="TextColor" Value="#7A4FB0"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SetBudgetCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Border>
+
+                                        <Label Text="✕" FontSize="16" TextColor="#C0392B"
+                                               HorizontalOptions="Center">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCategoryCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+
+                                    </VerticalStackLayout>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <controls:BottomNavBar Grid.Row="1"/>
+    </Grid>
+
+</ContentPage>

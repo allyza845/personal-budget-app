@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:allyza.Views.Controls"
+             x:Class="allyza.Views.ProfilePage"
+             BackgroundColor="#A8D4F0"
+             Shell.NavBarIsVisible="False"
+             Title="Profile">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <!-- No ScrollView — everything fits in one screen -->
+        <VerticalStackLayout Grid.Row="0" Padding="24,32,24,16" Spacing="0">
+
+            <!-- Avatar + name + email row -->
+            <Grid ColumnDefinitions="Auto,*" Margin="0,0,0,16">
+                <Border Grid.Column="0"
+                        BackgroundColor="#B8DEFA" Stroke="#7BBDE0" StrokeThickness="2"
+                        StrokeShape="Ellipse" WidthRequest="72" HeightRequest="72"
+                        VerticalOptions="Center">
+                    <Label Text="👤" FontSize="30"
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+                <VerticalStackLayout Grid.Column="1" Spacing="3"
+                                     VerticalOptions="Center" Margin="14,0,0,0">
+                    <Label Text="{Binding DisplayName}" FontSize="24" FontAttributes="Bold"
+                           TextColor="#0A0A0A" FontFamily="Georgia"/>
+                    <Label Text="{Binding Email}" FontSize="16" TextColor="#2E6A90"/>
+                    <Label Text="{Binding MemberSince}" FontSize="15" TextColor="#5A9ABF"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                               Color="#1A7BB9" HorizontalOptions="Center" Margin="0,0,0,10"/>
+
+            <!-- Details Card -->
+            <Border BackgroundColor="#D6EEFA" Stroke="#7BBDE0" StrokeThickness="1.5"
+                    StrokeShape="RoundRectangle 20" Padding="18,16" Margin="0,0,0,14">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label Text="ACCOUNT DETAILS" TextColor="#1A4F72"
+                           FontSize="13" CharacterSpacing="2" FontAttributes="Bold"/>
+
+                    <!-- User ID -->
+                    <Grid ColumnDefinitions="100,*">
+                        <Label Grid.Column="0" Text="User ID" TextColor="#1A4F72"
+                               FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding Uid}" TextColor="#2E6A90"
+                               FontSize="15" LineBreakMode="TailTruncation" VerticalOptions="Center"/>
+                    </Grid>
+
+                    <BoxView BackgroundColor="#7BBDE0" HeightRequest="1" Opacity="0.4"/>
+
+                    <!-- Email -->
+                    <Grid ColumnDefinitions="100,*">
+                        <Label Grid.Column="0" Text="Email" TextColor="#1A4F72"
+                               FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding Email}" TextColor="#2E6A90"
+                               FontSize="15" LineBreakMode="TailTruncation" VerticalOptions="Center"/>
+                    </Grid>
+
+                    <BoxView BackgroundColor="#7BBDE0" HeightRequest="1" Opacity="0.4"/>
+
+                    <!-- Display Name editable -->
+                    <Grid ColumnDefinitions="100,*">
+                        <Label Grid.Column="0" Text="Name" TextColor="#1A4F72"
+                               FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Border Grid.Column="1" Stroke="#7BBDE0" StrokeThickness="1.5"
+                                StrokeShape="RoundRectangle 10" BackgroundColor="#B8DEFA" Padding="10,4">
+                            <Entry Text="{Binding DisplayName}"
+                                   TextColor="#0A0A0A" BackgroundColor="Transparent"
+                                   PlaceholderColor="#4A8AAF" FontSize="16"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Save button -->
+                    <Button Text="SAVE" Command="{Binding SaveNameCommand}"
+                            IsEnabled="{Binding IsNotBusy}"
+                            BackgroundColor="#1A7BB9" TextColor="White"
+                            FontAttributes="Bold" FontSize="17"
+                            CornerRadius="12" HeightRequest="48"
+                            Shadow="{Shadow Brush='#801A7BB9', Offset='0,3', Radius='8'}"/>
+
+                    <Label Text="{Binding SuccessMessage}" TextColor="#1A5C8A"
+                           FontSize="15" IsVisible="{Binding HasSuccess}"
+                           HorizontalOptions="Center" FontAttributes="Bold"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Sign Out -->
+            <Button Text="Sign Out" Command="{Binding LogoutCommand}"
+                    BackgroundColor="Transparent" TextColor="#1A5C8A"
+                    BorderColor="#1A5C8A" BorderWidth="1.5"
+                    CornerRadius="14" HeightRequest="50"
+                    FontAttributes="Bold" FontSize="17"/>
+
+        </VerticalStackLayout>
+
+        <controls:BottomNavBar Grid.Row="1"/>
+
+    </Grid>
+
+</ContentPage>
