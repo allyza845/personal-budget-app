@@ -28,6 +28,11 @@ public class DashboardViewModel : BaseViewModel
     public double SpentRatio => MonthlyIncome > 0
         ? Math.Min((MonthlyExpenses + MonthlyFixed) / MonthlyIncome, 1.0) : 0;
 
+    // Percent of income saved (follows Analytics' single-month calculation)
+    public double SavingsRate { get; private set; } // in percent, can be negative
+    public string SavingsRateDisplay => MonthlyIncome > 0 ? $"{SavingsRate:F1}%" : "—";
+    public string SavingsRateColor => SavingsRate >= 0 ? "#22C55E" : "#EF4444";
+
     public string GreetingText { get; private set; } = string.Empty;
     public string TodayLabel => PhToday.ToString("dddd, MMMM d yyyy");
     public string MonthLabel => PhToday.ToString("MMMM yyyy");
@@ -38,7 +43,7 @@ public class DashboardViewModel : BaseViewModel
     public string NetBalanceDisplay => $"₱{Math.Abs(NetBalance):N2}";
     public string NetBalancePrefix => NetBalance >= 0 ? "+" : "-";
     public string NetBalanceColor => NetBalance >= 0 ? "#22C55E" : "#EF4444";
-    public string SpentPercentDisplay => $"{SpentRatio * 100:F0}% of income spent";
+    public string SpentPercentDisplay => $"{SpentRatio * 100:F1}% of income spent";
     public string SpentBarColor => SpentRatio > 0.9 ? "#EF4444"
                                           : SpentRatio > 0.7 ? "#F59E0B" : "#22C55E";
 

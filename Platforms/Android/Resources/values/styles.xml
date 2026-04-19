@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="Maui.SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+		<item name="android:windowBackground">@color/colorBackground</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowFullscreen">false</item>
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+	<style name="Maui.MainTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+		<item name="android:windowBackground">@color/colorBackground</item>
+	</style>
+</resources>

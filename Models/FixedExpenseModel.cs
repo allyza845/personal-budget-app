@@ -16,7 +16,7 @@ public class FixedExpenseModel : INotifyPropertyChanged
     // ── Backing fields ────────────────────────────────────────────────────────
     private bool _isActive = true;
     private string _lastPaidMonth = string.Empty; // "yyyy-MM"
-    private DateTime? _paidDate;                    // exact date paid, null if unpaid
+    private DateTime? _paidDate;                   // exact date paid, null if unpaid
 
     // ── Basic properties ──────────────────────────────────────────────────────
     public string Id { get; set; } = Guid.NewGuid().ToString();
@@ -60,6 +60,14 @@ public class FixedExpenseModel : INotifyPropertyChanged
     public bool IsPaidThisMonth => _lastPaidMonth == CurrentMonthKey;
 
     // ── Due-day countdown (PH time) ───────────────────────────────────────────
+
+    /// <summary>
+    /// Positive  = days until due (future)
+    /// Zero      = due today
+    /// Negative  = days overdue (past)
+    /// Caps DueDay to the last day of the current month so e.g. DueDay=31
+    /// in February resolves to the 28th/29th correctly.
+    /// </summary>
     private int DaysUntilDueInt
     {
         get
@@ -70,11 +78,23 @@ public class FixedExpenseModel : INotifyPropertyChanged
         }
     }
 
+    // ── Status flags ──────────────────────────────────────────────────────────
+    // All flags are mutually exclusive and checked in priority order:
+    // Paid → Inactive → Overdue → DueToday → UpcomingSoon → Scheduled
+
+    /// <summary>Active bill whose due date has already passed this month and is unpaid.</summary>
     public bool IsOverdue => IsActive && !IsPaidThisMonth && DaysUntilDueInt < 0;
+
+    /// <summary>Active bill that is due exactly today and is unpaid.</summary>
     public bool IsDueToday => IsActive && !IsPaidThisMonth && DaysUntilDueInt == 0;
+
+    /// <summary>Active bill due within the next 1–7 days (exclusive of today) and unpaid.</summary>
     public bool IsUpcomingSoon => IsActive && !IsPaidThisMonth && DaysUntilDueInt > 0 && DaysUntilDueInt <= 7;
+
+    /// <summary>Active bill due more than 7 days away and unpaid.</summary>
     public bool IsScheduled => IsActive && !IsPaidThisMonth && DaysUntilDueInt > 7;
 
+    // ── Display strings ───────────────────────────────────────────────────────
     public string BillStatus =>
           IsPaidThisMonth ? "PAID"
         : !IsActive ? "INACTIVE"
@@ -99,10 +119,13 @@ public class FixedExpenseModel : INotifyPropertyChanged
         : IsUpcomingSoon ? "#1A1000"
         : "#1A1A2E";
 
-    public string ActiveIcon => IsPaidThisMonth ? "✅" : IsActive ? "⬜" : "⏸";
     public string AmountDisplay => $"₱{Amount:N2}";
     public string DueDayDisplay => $"Due {DueDay}{Suffix(DueDay)}";
 
+    /// <summary>
+    /// Human-readable countdown string.
+    /// Examples: "Paid ✓", "2d overdue", "Due today", "Due in 5d", "Inactive"
+    /// </summary>
     public string DaysUntilDue
     {
         get
@@ -131,9 +154,9 @@ public class FixedExpenseModel : INotifyPropertyChanged
     {
         foreach (var p in new[]
         {
-            nameof(IsPaidThisMonth), nameof(IsOverdue),     nameof(IsDueToday),
-            nameof(IsUpcomingSoon),  nameof(IsScheduled),   nameof(BillStatus),
-            nameof(BillStatusColor), nameof(BillStatusBg),  nameof(ActiveIcon),
+            nameof(IsPaidThisMonth), nameof(IsOverdue),    nameof(IsDueToday),
+            nameof(IsUpcomingSoon),  nameof(IsScheduled),  nameof(BillStatus),
+            nameof(BillStatusColor), nameof(BillStatusBg),
             nameof(DaysUntilDue),    nameof(DueDayDisplay), nameof(PaidDate),
         }) OnPropertyChanged(p);
     }

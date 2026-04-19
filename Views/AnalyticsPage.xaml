@@ -45,22 +45,7 @@
                             <Label Text="This Month" FontSize="15" FontAttributes="Bold" TextColor="#0A0A0A"/>
                         </Border>
 
-                        <Border StrokeShape="RoundRectangle 20" Padding="16,8" StrokeThickness="1.5">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding IsLastMonth}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#1A7BB9"/>
-                                    <Setter Property="Stroke" Value="#1A7BB9"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding IsLastMonth}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="#B8DEFA"/>
-                                    <Setter Property="Stroke" Value="#7BBDE0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SetPeriodCommand}" CommandParameter="Last Month"/>
-                            </Border.GestureRecognizers>
-                            <Label Text="Last Month" FontSize="15" FontAttributes="Bold" TextColor="#0A0A0A"/>
-                        </Border>
+                        
 
                         <Border StrokeShape="RoundRectangle 20" Padding="16,8" StrokeThickness="1.5">
                             <Border.Triggers>
@@ -99,7 +84,7 @@
                     </HorizontalStackLayout>
                 </ScrollView>
 
-                <!-- Summary Cards Row 1 -->
+                <!-- Summary Cards Row 1: Income + Expenses -->
                 <Grid ColumnDefinitions="*,8,*" Margin="0,0,0,12">
                     <Border Grid.Column="0" BackgroundColor="#C8F0DC"
                             Stroke="#4CAF82" StrokeThickness="1.5"
@@ -125,30 +110,41 @@
                     </Border>
                 </Grid>
 
-                <!-- Summary Cards Row 2 -->
+                <!-- Summary Cards Row 2: Fixed + Savings -->
                 <Grid ColumnDefinitions="*,8,*" Margin="0,0,0,20">
                     <Border Grid.Column="0" BackgroundColor="#FFF0C8"
                             Stroke="#D4A020" StrokeThickness="1.5"
                             StrokeShape="RoundRectangle 16" Padding="14,12">
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="📌 FIXED" FontSize="13" TextColor="#7A5A00"
+                            <Label Text="📌 FIXED BILLS" FontSize="13" TextColor="#7A5A00"
                                    CharacterSpacing="1" FontAttributes="Bold"/>
+                            <!-- TotalFixedDisplay = all active fixed (committed) -->
                             <Label Text="{Binding TotalFixedDisplay}"
                                    FontSize="20" FontAttributes="Bold" TextColor="#0A0A0A"/>
-                            <Label Text="bills / month" FontSize="13" TextColor="#2E6A90"/>
+                            <!-- TotalFixedPaidDisplay = how much has been paid so far -->
+                            <Label Text="{Binding TotalFixedPaidDisplay}"
+                                   FontSize="13" TextColor="#2E6A90"/>
                         </VerticalStackLayout>
                     </Border>
                     <Border Grid.Column="2" BackgroundColor="#B8DEFA"
-        Stroke="#5A9ABF" StrokeThickness="1.5"
+                            Stroke="#5A9ABF" StrokeThickness="1.5"
                             StrokeShape="RoundRectangle 16" Padding="14,12">
                         <VerticalStackLayout Spacing="4">
                             <Label Text="🏦 SAVINGS" FontSize="13" CharacterSpacing="1"
                                    FontAttributes="Bold" TextColor="#1A7BB9"/>
+                            <!-- Always positive — NetSavingsLabel says Saved or Overspent -->
                             <Label Text="{Binding NetSavingsDisplay}"
-                                   FontSize="20" FontAttributes="Bold"
-                                   TextColor="#0A0A0A"/>
-                            <Label Text="{Binding SavingsRateDisplay}"
-                                   FontSize="13" TextColor="#2E6A90"/>
+                                   FontSize="20" FontAttributes="Bold" TextColor="#0A0A0A"/>
+                            <!-- e.g. "35.0% · Saved" or "22.5% · Overspent" -->
+                            <Label FontSize="13" TextColor="#2E6A90">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding SavingsRateDisplay}"/>
+                                        <Span Text=" · "/>
+                                        <Span Text="{Binding NetSavingsLabel}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
@@ -159,16 +155,18 @@
                     <VerticalStackLayout Spacing="14">
 
                         <Grid ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="BUDGET vs SPENT"
+                            <Label Grid.Column="0" Text="BUDGET vs EXPENSES"
                                    FontSize="15" TextColor="#1A4F72"
                                    CharacterSpacing="2" FontAttributes="Bold"/>
+                            <!-- BudgetStatusLabel = "₱X remaining" or "₱X over budget" -->
                             <Label Grid.Column="1" Text="{Binding BudgetStatusLabel}"
-                                   FontSize="15" TextColor="#0A0A0A"/>
+                                   FontSize="15" TextColor="{Binding BudgetStatusColor}"/>
                         </Grid>
 
                         <VerticalStackLayout Spacing="6">
+                            <!-- BudgetRatio is clamped 0–1 for the bar control -->
                             <ProgressBar Progress="{Binding BudgetRatio}"
-                                         ProgressColor="#1A7BB9"
+                                         ProgressColor="{Binding BudgetStatusColor}"
                                          BackgroundColor="#B8DEFA" HeightRequest="10"/>
                             <Grid ColumnDefinitions="*,*,*">
                                 <VerticalStackLayout Grid.Column="0" Spacing="1">
@@ -183,12 +181,22 @@
                                            HorizontalOptions="Center"/>
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="2" HorizontalOptions="End" Spacing="1">
+                                    <!-- BudgetRemainingLabel = "Remaining" or "Overspent" -->
                                     <Label Text="{Binding BudgetRemainingLabel}"
                                            FontSize="13" TextColor="#2E6A90" HorizontalOptions="End"/>
-                                    <Label Text="{Binding BudgetRemainingDisplay}"
-                                           FontSize="15" FontAttributes="Bold"
-                                           TextColor="#0A0A0A"
-                                           HorizontalOptions="End"/>
+                                    <!-- Shows remaining when under, overspent amount when over -->
+                                    <Label FontSize="15" FontAttributes="Bold"
+                                           TextColor="{Binding BudgetStatusColor}"
+                                           HorizontalOptions="End">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsOverBudget}" Value="True">
+                                                <Setter Property="Text" Value="{Binding BudgetOverspentDisplay}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsOverBudget}" Value="False">
+                                                <Setter Property="Text" Value="{Binding BudgetRemainingDisplay}"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
                                 </VerticalStackLayout>
                             </Grid>
                         </VerticalStackLayout>
@@ -211,7 +219,7 @@
                                             <VerticalStackLayout Grid.Column="2" HorizontalOptions="End" Spacing="2">
                                                 <Label Text="{Binding RemainingDisplay}"
                                                        FontSize="15" FontAttributes="Bold"
-                                                       TextColor="#0A0A0A"
+                                                       TextColor="{Binding StatusColor}"
                                                        HorizontalOptions="End"/>
                                                 <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
                                                         StrokeThickness="1" StrokeShape="RoundRectangle 6"
@@ -227,8 +235,9 @@
                                                 </Border>
                                             </VerticalStackLayout>
                                         </Grid>
+                                        <!-- UsageRatio clamped 0–1 for bar; StatusColor goes red when over -->
                                         <ProgressBar Progress="{Binding UsageRatio}"
-                                                     ProgressColor="#1A7BB9"
+                                                     ProgressColor="{Binding StatusColor}"
                                                      BackgroundColor="#B8DEFA" HeightRequest="6"/>
                                     </VerticalStackLayout>
                                 </DataTemplate>
@@ -244,11 +253,13 @@
                     <VerticalStackLayout Spacing="10">
                         <Label Text="INCOME USAGE" FontSize="15" TextColor="#1A4F72"
                                CharacterSpacing="2" FontAttributes="Bold"/>
+                        <!-- SpentRatio = (expenses + ALL active fixed) / income -->
                         <ProgressBar Progress="{Binding SpentRatio}"
                                      ProgressColor="{Binding SpentBarColor, Converter={StaticResource StringToColor}}"
                                      BackgroundColor="#B8DEFA" HeightRequest="10"/>
+                        <!-- e.g. "65.0% of income used" -->
                         <Label Text="{Binding SpentRatioDisplay}"
-       FontSize="15" TextColor="{Binding SpentBarColor}" FontAttributes="Bold"/>
+                               FontSize="15" TextColor="{Binding SpentBarColor}" FontAttributes="Bold"/>
                         <HorizontalStackLayout Spacing="16">
                             <HorizontalStackLayout Spacing="6">
                                 <BoxView Color="#4CAF82" WidthRequest="10" HeightRequest="10"
@@ -271,7 +282,7 @@
 
                 <!-- Insight -->
                 <Border IsVisible="{Binding HasInsight}"
-        BackgroundColor="#B8DEFA" Stroke="#1A7BB9"
+                        BackgroundColor="#B8DEFA" Stroke="#1A7BB9"
                         StrokeThickness="1.5" StrokeShape="RoundRectangle 14"
                         Padding="16,12" Margin="0,0,0,16">
                     <Label Text="{Binding InsightText}"
@@ -327,44 +338,7 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- Spending by Category -->
-                <Border BackgroundColor="#D6EEFA" Stroke="#7BBDE0" StrokeThickness="1.5"
-                        StrokeShape="RoundRectangle 16" Padding="16,14"
-                        IsVisible="{Binding HasCategories}">
-                    <VerticalStackLayout Spacing="14">
-
-                        <Label Text="SPENDING BY CATEGORY" FontSize="15"
-                               TextColor="#1A4F72" CharacterSpacing="2" FontAttributes="Bold"/>
-
-                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding TopCategories}" Spacing="12">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="models:CategorySummary">
-                                    <VerticalStackLayout Spacing="6">
-                                        <Grid ColumnDefinitions="30,*,Auto">
-                                            <Label Grid.Column="0" Text="{Binding Icon}"
-                                                   FontSize="16" VerticalOptions="Center"/>
-                                            <Label Grid.Column="1" Text="{Binding Name}"
-                                                   FontSize="15" TextColor="#0A0A0A" FontAttributes="Bold"
-                                                   VerticalOptions="Center" Margin="6,0,0,0"/>
-                                            <VerticalStackLayout Grid.Column="2" HorizontalOptions="End">
-                                                <Label Text="{Binding AmountDisplay}"
-                                                       FontSize="15" FontAttributes="Bold"
-                                                       TextColor="#0A0A0A" HorizontalOptions="End"/>
-                                                <Label Text="{Binding PercentDisplay}"
-                                                       FontSize="13" TextColor="#2E6A90"
-                                                       HorizontalOptions="End"/>
-                                            </VerticalStackLayout>
-                                        </Grid>
-                                        <ProgressBar Progress="{Binding BarRatio}"
-                                                     ProgressColor="{Binding Color, Converter={StaticResource StringToColor}}"
-                                                     BackgroundColor="#B8DEFA" HeightRequest="6"/>
-                                    </VerticalStackLayout>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
-
-                    </VerticalStackLayout>
-                </Border>
+               
 
             </VerticalStackLayout>
         </ScrollView>

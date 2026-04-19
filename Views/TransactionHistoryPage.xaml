@@ -50,19 +50,8 @@
                     </Border>
 
                     <!-- Balance — prefix + amount both black -->
-                    <Border Grid.Column="4" BackgroundColor="#D6EEFA"
-                            Stroke="#7BBDE0" StrokeThickness="1.5"
-                            StrokeShape="RoundRectangle 14" Padding="12,10">
-                        <VerticalStackLayout Spacing="3">
-                            <Label Text="Balance" FontSize="12" TextColor="#1A4F72" FontAttributes="Bold"/>
-                            <HorizontalStackLayout Spacing="2">
-                                <Label Text="{Binding NetBalancePrefix}"
-                                       FontSize="15" FontAttributes="Bold" TextColor="#0A0A0A"/>
-                                <Label Text="{Binding NetBalanceDisplay}"
-                                       FontSize="15" FontAttributes="Bold" TextColor="#0A0A0A"/>
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
+                    <!-- You may want to add the missing Balance column here if needed -->
+
                 </Grid>
 
                 <!-- Search bar -->
@@ -202,7 +191,7 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding SetFilterCommand}" CommandParameter="Expense"/>
                             </Border.GestureRecognizers>
-                            <Label Text="💸 Spent" FontSize="14" FontAttributes="Bold" TextColor="#0A0A0A"/>
+                            <Label Text="💸 Expenses" FontSize="14" FontAttributes="Bold" TextColor="#0A0A0A"/>
                         </Border>
 
                         <Border StrokeShape="RoundRectangle 20" Padding="16,8" StrokeThickness="1.5">
@@ -219,7 +208,7 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding SetFilterCommand}" CommandParameter="Fixed"/>
                             </Border.GestureRecognizers>
-                            <Label Text="📌 Fixed" FontSize="14" FontAttributes="Bold" TextColor="#0A0A0A"/>
+                            <Label Text="📌 Fixed Bills" FontSize="14" FontAttributes="Bold" TextColor="#0A0A0A"/>
                         </Border>
 
                     </HorizontalStackLayout>

@@ -3,13 +3,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
-        <Setter Property="Shell.BackgroundColor"       Value="#0F0F1A"/>
-        <Setter Property="Shell.ForegroundColor"       Value="White"/>
-        <Setter Property="Shell.TitleColor"            Value="White"/>
-        <Setter Property="Shell.TabBarBackgroundColor" Value="#12121F"/>
-        <Setter Property="Shell.TabBarForegroundColor" Value="#7C6FFF"/>
-        <Setter Property="Shell.TabBarTitleColor"      Value="#7C6FFF"/>
-        <Setter Property="Shell.TabBarUnselectedColor" Value="#5050A0"/>
+      <Setter Property="Shell.BackgroundColor"       Value="#A8D4F0"/>
+<Setter Property="Shell.ForegroundColor"       Value="#0A0A0A"/>
+<Setter Property="Shell.TitleColor"            Value="#0A0A0A"/>
+<Setter Property="Shell.TabBarBackgroundColor" Value="#D6EEFA"/>
+<Setter Property="Shell.TabBarForegroundColor" Value="#1A7BB9"/>
+<Setter Property="Shell.TabBarTitleColor"      Value="#1A7BB9"/>
+<Setter Property="Shell.TabBarUnselectedColor" Value="#5A9ABF"/>
     </Style>
 
     <Style TargetType="NavigationPage">
@@ -23,7 +23,7 @@
     </Style>
 
     <Style TargetType="Button">
-        <Setter Property="BackgroundColor" Value="#7C6FFF"/>
+        <Setter Property="BackgroundColor" Value="#D6EEFA"/>
         <Setter Property="TextColor"       Value="White"/>
         <Setter Property="CornerRadius"    Value="12"/>
     </Style>

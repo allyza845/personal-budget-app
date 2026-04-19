@@ -102,7 +102,7 @@
                 HorizontalOptions="Center" VerticalOptions="Center"
                 TextColor="White"/>
                             </Border>
-                            <Label x:Name="FixedLabel" Text="Fixed" FontSize="11"
+                            <Label x:Name="FixedLabel" Text="Fixed Bills" FontSize="11"
             FontAttributes="Bold" TextColor="#A8D4F0"
             HorizontalOptions="Center"/>
                         </VerticalStackLayout>

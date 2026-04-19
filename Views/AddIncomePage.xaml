@@ -164,7 +164,7 @@
                         <!-- Error / Success -->
                         <Label Text="{Binding ErrorMessage}" TextColor="#C0392B"
                                FontSize="15" IsVisible="{Binding HasError}"/>
-                        <Label Text="{Binding SuccessMessage}" TextColor="#1A4F72"
+                        <Label Text="{Binding SuccessMessage}" TextColor="#1A6640"
                                FontSize="15" IsVisible="{Binding HasSuccess}"
                                HorizontalOptions="Center" FontAttributes="Bold"/>
 

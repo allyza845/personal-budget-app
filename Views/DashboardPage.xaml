@@ -101,7 +101,7 @@
                                     Stroke="#E07070" StrokeThickness="1"
                                     StrokeShape="RoundRectangle 12" Padding="10,8">
                                 <VerticalStackLayout Spacing="2">
-                                    <Label Text="Spent" FontSize="13" TextColor="#8B2020"/>
+                                    <Label Text="Expenses" FontSize="13" TextColor="#8B2020"/>
                                     <Label Text="{Binding MonthlyExpensesDisplay}"
                                            FontSize="15" FontAttributes="Bold" TextColor="#0A0A0A"/>
                                 </VerticalStackLayout>
@@ -110,7 +110,7 @@
                                     Stroke="#D4A020" StrokeThickness="1"
                                     StrokeShape="RoundRectangle 12" Padding="10,8">
                                 <VerticalStackLayout Spacing="2">
-                                    <Label Text="Fixed" FontSize="13" TextColor="#7A5A00"/>
+                                    <Label Text="Fixed Bills" FontSize="13" TextColor="#7A5A00"/>
                                     <Label Text="{Binding MonthlyFixedDisplay}"
                                            FontSize="15" FontAttributes="Bold" TextColor="#0A0A0A"/>
                                 </VerticalStackLayout>
@@ -125,7 +125,7 @@
                         StrokeShape="RoundRectangle 20" Padding="18,16" Margin="0,0,0,20">
                     <VerticalStackLayout Spacing="12">
 
-                        <Label Text="🗓️  TODAY'S SPENDING" FontSize="12"
+                        <Label Text="TODAY'S SPENDING" FontSize="12"
                                TextColor="#1A4F72" CharacterSpacing="2" FontAttributes="Bold"/>
 
                         <Grid ColumnDefinitions="*,Auto">

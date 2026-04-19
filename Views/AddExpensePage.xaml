@@ -151,12 +151,12 @@
                 </Border>
 
                 <!-- Recent Expenses -->
-                <Label Text="RECENT EXPENSES" TextColor="#1A4F72"
+                <Label Text="ALL EXPENSES" TextColor="#1A4F72"
                        FontSize="13" CharacterSpacing="2" FontAttributes="Bold" Margin="0,0,0,12"/>
 
                 <VerticalStackLayout IsVisible="{Binding HasNoExpenses}"
                                      HorizontalOptions="Center" Spacing="8" Margin="0,20,0,20">
-                    <Label Text="📭" FontSize="40" HorizontalOptions="Center"/>
+                    <Label Text="📋" FontSize="40" HorizontalOptions="Center"/>
                     <Label Text="No expenses recorded yet"
                            TextColor="#2E6A90" FontSize="14" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
