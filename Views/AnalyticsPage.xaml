@@ -154,13 +154,10 @@
                         StrokeShape="RoundRectangle 16" Padding="16,14" Margin="0,0,0,16">
                     <VerticalStackLayout Spacing="14">
 
-                        <Grid ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="BUDGET vs EXPENSES"
-                                   FontSize="15" TextColor="#1A4F72"
-                                   CharacterSpacing="2" FontAttributes="Bold"/>
-                            <!-- BudgetStatusLabel = "₱X remaining" or "₱X over budget" -->
-                            <Label Grid.Column="1" Text="{Binding BudgetStatusLabel}"
-                                   FontSize="15" TextColor="{Binding BudgetStatusColor}"/>
+                        <Grid>
+                            <Label Text="BUDGET vs EXPENSES"
+           FontSize="15" TextColor="#1A4F72"
+           CharacterSpacing="2" FontAttributes="Bold"/>
                         </Grid>
 
                         <VerticalStackLayout Spacing="6">
@@ -221,18 +218,7 @@
                                                        FontSize="15" FontAttributes="Bold"
                                                        TextColor="{Binding StatusColor}"
                                                        HorizontalOptions="End"/>
-                                                <Border BackgroundColor="#B8DEFA" Stroke="#7BBDE0"
-                                                        StrokeThickness="1" StrokeShape="RoundRectangle 6"
-                                                        Padding="6,3">
-                                                    <Label Text="{Binding StatusLabel}"
-                                                           FontSize="13" TextColor="#1A4F72" FontAttributes="Bold">
-                                                        <Label.GestureRecognizers>
-                                                            <TapGestureRecognizer
-                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SetBudgetCommand}"
-                                                                CommandParameter="{Binding .}"/>
-                                                        </Label.GestureRecognizers>
-                                                    </Label>
-                                                </Border>
+                                              
                                             </VerticalStackLayout>
                                         </Grid>
                                         <!-- UsageRatio clamped 0–1 for bar; StatusColor goes red when over -->

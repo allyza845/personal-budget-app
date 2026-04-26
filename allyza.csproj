@@ -57,6 +57,10 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <AndroidResource Remove="Platforms\Android\Resources\drawable\splash_screen.xml" />
+	</ItemGroup>
+
 	
 
 	<ItemGroup>

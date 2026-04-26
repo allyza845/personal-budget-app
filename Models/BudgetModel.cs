@@ -64,9 +64,9 @@ public class BudgetModel
     ///   No limit     → "—"
     /// </summary>
     public string RemainingDisplay =>
-        !HasBudget ? "—"
-      : IsOverBudget ? $"₱{OverspentAmount:N2} over"
-      : $"₱{RemainingAmount:N2} left";
+     !HasBudget ? "—"
+   : IsOverBudget ? $"₱{OverspentAmount:N2} over"
+   : string.Empty;
 
     /// <summary>
     /// Short chip label for the tap-to-set-budget button.
@@ -77,10 +77,7 @@ public class BudgetModel
     ///   Has budget        → "40%"
     ///   No budget set     → "Set limit"
     /// </summary>
-    public string StatusLabel =>
-        !HasBudget ? "Set limit"
-      : IsOverBudget ? "OVER"
-      : $"{BudgetRawRatio * 100:F0}%";
+   
 
     /// <summary>
     /// Color for the progress bar and amount labels.

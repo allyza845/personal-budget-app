@@ -197,9 +197,8 @@ public class AnalyticsViewModel : BaseViewModel
             }
             else // All Time
             {
-                // Use the earliest transaction date as the account start point.
-                // Convert each date to PH local time before comparing to avoid
-                // UTC-stored dates shifting into the previous month.
+                // All Time scales by months elapsed since Jan 1 of the earliest transaction year.
+                // If all activity is within the current year, this matches "This Year" exactly.
                 var allDates = allIncomes.Select(i => i.Date)
                     .Concat(allExpenses.Select(e => e.Date))
                     .Where(d => d > DateTime.MinValue)
@@ -212,18 +211,27 @@ public class AnalyticsViewModel : BaseViewModel
 
                 if (allDates.Count == 0)
                 {
-                    // No transactions yet — treat account as starting this month
                     monthsCountForBudgetScaling = 1;
                 }
                 else
                 {
-                    var earliest = new DateTime(allDates.Min().Year, allDates.Min().Month, 1);
-                    var nowMonth = new DateTime(phNow.Year, phNow.Month, 1);
-                    // Inclusive month count: Apr 2026 → Apr 2026 = 1, Jan 2026 → Apr 2026 = 4
-                    monthsCountForBudgetScaling =
-                        (nowMonth.Year - earliest.Year) * 12
-                        + (nowMonth.Month - earliest.Month) + 1;
-                    monthsCountForBudgetScaling = Math.Max(1, monthsCountForBudgetScaling);
+                    int earliestYear = allDates.Min(d => d.Year);
+
+                    if (earliestYear == phNow.Year)
+                    {
+                        // Same year as now → identical to "This Year"
+                        monthsCountForBudgetScaling = phNow.Month;
+                    }
+                    else
+                    {
+                        // Spans multiple years → Jan of earliest year → current month
+                        var earliestMonth = new DateTime(earliestYear, 1, 1);
+                        var nowMonth = new DateTime(phNow.Year, phNow.Month, 1);
+                        monthsCountForBudgetScaling =
+                            (nowMonth.Year - earliestMonth.Year) * 12
+                            + (nowMonth.Month - earliestMonth.Month) + 1;
+                        monthsCountForBudgetScaling = Math.Max(1, monthsCountForBudgetScaling);
+                    }
                 }
             }
 
